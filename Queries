@@ -1,1 +1,30 @@
 
+-- IN keyword example
+SELECT * FROM worker
+WHERE emp_dept IN ('HR','IT');
+
+-- NOT IN example
+SELECT emp_name
+FROM worker
+WHERE emp_id NOT IN (SELECT emp_id FROM project);
+
+-- BETWEEN 
+SELECT * 
+FROM project
+WHERE pid BETWEEN 301 AND 304;
+
+--LIKE
+SELECT emp_name
+FROM worker
+WHERE emp_name LIKE '%n%';
+
+-- ORDER By
+SELECT *
+FROM worker
+ORDER BY emp_salary DESC;
+
+--NUll and NOT NULL 
+
+SELECT * FROM project WHERE pid IS NULL;
+SELECT * FROM project WHERE pid IS NOT NULL;
+
