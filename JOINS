@@ -1,0 +1,93 @@
+   =========================================================
+   JOINS PRACTICE
+   Tables used: worker, project
+   ========================================================= 
+
+
+  INNER JOIN
+   Employees who are working on projects */
+SELECT w.emp_id, w.emp_name, w.emp_dept, p.project_name, p.location
+FROM worker w
+INNER JOIN project p
+ON w.emp_id = p.emp_id;
+
+
+ LEFT JOIN
+   All employees with their projects (if any) */
+SELECT w.emp_id, w.emp_name, p.project_name
+FROM worker w
+LEFT JOIN project p
+ON w.emp_id = p.emp_id;
+
+
+ RIGHT JOIN
+   All projects with employee details */
+SELECT w.emp_name, p.project_name, p.location
+FROM worker w
+RIGHT JOIN project p
+ON w.emp_id = p.emp_id;
+
+
+ Employees who are NOT working on any project (LEFT JOIN) */
+SELECT w.emp_id, w.emp_name
+FROM worker w
+LEFT JOIN project p
+ON w.emp_id = p.emp_id
+WHERE p.emp_id IS NULL;
+
+
+  Projects with employee department */
+SELECT p.project_name, p.location, w.emp_dept
+FROM project p
+JOIN worker w
+ON p.emp_id = w.emp_id;
+
+
+  Employees working on projects located in Delhi or Mumbai */
+SELECT w.emp_name, p.location
+FROM worker w
+JOIN project p
+ON w.emp_id = p.emp_id
+WHERE p.location IN ('Delhi', 'Mumbai');
+
+
+  Employee name and number of projects handled (JOIN + GROUP BY) */
+SELECT w.emp_name, COUNT(p.pid) AS project_count
+FROM worker w
+LEFT JOIN project p
+ON w.emp_id = p.emp_id
+GROUP BY w.emp_name;
+
+
+ Departments and total projects handled */
+SELECT w.emp_dept, COUNT(p.pid) AS total_projects
+FROM worker w
+JOIN project p
+ON w.emp_id = p.emp_id
+GROUP BY w.emp_dept;
+
+
+  Employees earning more than 30000 and working on a project */
+SELECT DISTINCT w.emp_name, w.emp_salary
+FROM worker w
+JOIN project p
+ON w.emp_id = p.emp_id
+WHERE w.emp_salary > 30000;
+
+
+  CROSS JOIN (all combinations – for understanding) */
+SELECT w.emp_name, p.project_name
+FROM worker w
+CROSS JOIN project p;
+
+
+  NATURAL JOIN (only if column names are same) */
+SELECT *
+FROM worker
+NATURAL JOIN project;
+
+
+  OLD STYLE JOIN (NOT recommended but asked in interviews) */
+SELECT *
+FROM worker w, project p
+WHERE w.emp_id = p.emp_id;
