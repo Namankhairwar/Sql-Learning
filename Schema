@@ -1,0 +1,20 @@
+-- Worker table creation
+
+CREATE TABLE worker (
+  emp_id INT,
+  emp_name VARCHAR(250),
+  emp_dept VARCHAR(100),
+  emp_salary INT
+);
+
+ALTER TABLE worker
+ADD CONSTRAINT pk_worker PRIMARY KEY (emp_id);
+
+-- Project table creation
+
+CREATE TABLE project (
+  pid INT PRIMARY KEY,
+  emp_id INT REFERENCES worker(emp_id),
+  project_name VARCHAR(50),
+  location VARCHAR(200)
+);
