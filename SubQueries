@@ -1,0 +1,138 @@
+   =========================================================
+   SUBQUERIES PRACTICE (Worker & Project Tables)
+   ========================================================= 
+
+Employees who are working on at least one project (IN) 
+SELECT *
+FROM worker
+WHERE emp_id IN (
+    SELECT emp_id
+    FROM project
+);
+
+
+ Employees who are NOT working on any project (NOT IN) 
+SELECT emp_name
+FROM worker
+WHERE emp_id NOT IN (
+    SELECT emp_id
+    FROM project
+);
+
+
+ Employees working on at least one project (EXISTS) 
+SELECT *
+FROM worker w
+WHERE EXISTS (
+    SELECT 1
+    FROM project p
+    WHERE p.emp_id = w.emp_id
+);
+
+
+ Employees NOT working on any project (NOT EXISTS – best practice) 
+SELECT *
+FROM worker w
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM project p
+    WHERE p.emp_id = w.emp_id
+);
+
+
+  Employees earning MORE than average salary (Scalar Subquery) 
+SELECT emp_name, emp_salary
+FROM worker
+WHERE emp_salary > (
+    SELECT AVG(emp_salary)
+    FROM worker
+);
+
+
+  Highest salary employee department-wise (Correlated Subquery)  
+SELECT emp_name, emp_dept, emp_salary
+FROM worker w
+WHERE emp_salary = (
+    SELECT MAX(emp_salary)
+    FROM worker
+    WHERE emp_dept = w.emp_dept
+);
+
+
+  Departments having MORE than 1 employee  
+SELECT emp_dept
+FROM worker
+GROUP BY emp_dept
+HAVING COUNT(*) > 1;
+
+
+ Employees belonging to departments having more than 1 employee  
+SELECT emp_name, emp_dept
+FROM worker
+WHERE emp_dept IN (
+    SELECT emp_dept
+    FROM worker
+    GROUP BY emp_dept
+    HAVING COUNT(*) > 1
+);
+
+
+ Employees working on projects located in Delhi or Mumbai  
+SELECT emp_name
+FROM worker
+WHERE emp_id IN (
+    SELECT emp_id
+    FROM project
+    WHERE location IN ('Delhi', 'Mumbai')
+);
+
+
+  Projects handled by employees from HR department  
+SELECT *
+FROM project
+WHERE emp_id IN (
+    SELECT emp_id
+    FROM worker
+    WHERE emp_dept = 'HR'
+);
+
+
+  Employees working on MAXIMUM number of projects (Advanced) 
+SELECT emp_id
+FROM project
+GROUP BY emp_id
+HAVING COUNT(*) = (
+    SELECT MAX(cnt)
+    FROM (
+        SELECT COUNT(*) AS cnt
+        FROM project
+        GROUP BY emp_id
+    ) t
+);
+
+
+  Employees whose salary is equal to minimum salary in company  
+SELECT emp_name, emp_salary
+FROM worker
+WHERE emp_salary = (
+    SELECT MIN(emp_salary)
+    FROM worker
+);
+
+
+  Employees working on MORE THAN one project  
+SELECT emp_id
+FROM project
+GROUP BY emp_id
+HAVING COUNT(*) > 1;
+
+
+  Employee details who are working on MORE THAN one project  
+SELECT *
+FROM worker
+WHERE emp_id IN (
+    SELECT emp_id
+    FROM project
+    GROUP BY emp_id
+    HAVING COUNT(*) > 1
+);
