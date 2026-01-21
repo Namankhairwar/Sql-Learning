@@ -1,0 +1,15 @@
+-- Insert worker data
+
+INSERT INTO worker VALUES
+(1,'Naman','HR',25000),
+(2,'Aman','IT',28000),
+(3,'Sunil','Sales',32000),
+(4,'Poornima','sales',27000),
+(5,'Pawan','HR',35000),
+(7,'Raju','Intern',NULL);
+
+-- Update department casing
+
+UPDATE worker
+SET emp_dept = 'Sales'
+WHERE emp_dept = 'sales';
