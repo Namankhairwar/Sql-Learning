@@ -1,0 +1,93 @@
+   =========================================================
+   AGGREGATE FUNCTIONS PRACTICE
+   Tables used: worker, project
+   =========================================================  
+
+
+  Total number of employees */
+SELECT COUNT(*) AS total_employees
+FROM worker;
+
+
+  Total number of projects */
+SELECT COUNT(*) AS total_projects
+FROM project;
+
+
+  Department-wise employee count */
+SELECT emp_dept, COUNT(*) AS emp_count
+FROM worker
+GROUP BY emp_dept;
+
+
+ Department-wise total salary */
+SELECT emp_dept, SUM(emp_salary) AS total_salary
+FROM worker
+GROUP BY emp_dept;
+
+
+  Average salary department-wise */
+SELECT emp_dept, AVG(emp_salary) AS avg_salary
+FROM worker
+GROUP BY emp_dept;
+
+
+  Maximum salary in the company */
+SELECT MAX(emp_salary) AS max_salary
+FROM worker;
+
+
+ Minimum salary in the company */
+SELECT MIN(emp_salary) AS min_salary
+FROM worker;
+
+
+  Highest salary department-wise */
+SELECT emp_dept, MAX(emp_salary) AS highest_salary
+FROM worker
+GROUP BY emp_dept;
+
+
+  Employees earning more than average salary */
+SELECT emp_name, emp_salary
+FROM worker
+WHERE emp_salary > (
+    SELECT AVG(emp_salary)
+    FROM worker
+);
+
+
+  Number of projects handled by each employee */
+SELECT emp_id, COUNT(*) AS project_count
+FROM project
+GROUP BY emp_id;
+
+
+  Employees handling more than one project */
+SELECT emp_id, COUNT(*) AS project_count
+FROM project
+GROUP BY emp_id
+HAVING COUNT(*) > 1;
+
+
+  Department-wise employee count where count > 1 */
+SELECT emp_dept, COUNT(*) AS emp_count
+FROM worker
+GROUP BY emp_dept
+HAVING COUNT(*) > 1;
+
+
+  Total salary of employees who are working on at least one project */
+SELECT SUM(emp_salary) AS total_salary
+FROM worker
+WHERE emp_id IN (
+    SELECT emp_id FROM project
+);
+
+
+ Average salary of employees working on projects */
+SELECT AVG(emp_salary) AS avg_salary
+FROM worker
+WHERE emp_id IN (
+    SELECT emp_id FROM project
+);
