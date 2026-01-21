@@ -1,4 +1,3 @@
-# Sql-Learning
 # SQL Learning Journey 🚀
 
 This repository contains my structured SQL learning and practice using a real-world schema (`worker` and `project`).  
@@ -73,4 +72,18 @@ This schema is consistently used across all queries to maintain real-world relev
 ---
 
 ## 📁 Repository Structure
+sql-learning/
+
+schema/
+
+dml/
+
+queries/
+
+aggregate/
+
+subqueries/
+
+joins/
+README.md
 
